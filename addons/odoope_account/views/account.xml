@@ -1,0 +1,54 @@
+<odoo>
+  <data>
+      <!--Tree-->
+      <record id="view_account_account_type_list" model="ir.ui.view">
+          <field name="name">account.account.type.tree</field>
+          <field name="model">account.account.type</field>
+          <field name="arch" type="xml">
+              <tree>
+                  <field name="name"/>
+                  <field name="type"/>
+              </tree>
+          </field>
+      </record>
+
+      <!--Form-->
+      <record id="view_account_invoice_supplier_form" model="ir.ui.view">
+          <field name="name">account.invoice.supplier.form</field>
+          <field name="model">account.invoice</field>
+          <field name="inherit_id" ref="account.invoice_supplier_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='currency_id']" position="after">
+                  <field name="l10n_pe_exchange_rate"/>
+              </xpath>
+              <xpath expr="//field[@name='user_id']" position="replace"/>
+              <xpath expr="//field[@name='move_id']" position="after">
+                  <field name="l10n_pe_invoice_origin_id" attrs="{'invisible': [('l10n_pe_invoice_origin_id', '=', False)]}"/>
+                  <field name="user_id"/>
+              </xpath>
+          </field>
+      </record>
+
+      <record model="ir.ui.view" id="view_tax_form">
+          <field name="name">account.tax.form</field>
+          <field name="model">account.tax</field>
+          <field name="inherit_id" ref="account.view_tax_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//notebook//page[1]/group" position="after">
+                  <group name="peruvian_settings" string="Configuracion peruana" >
+                      <group>
+                          <field name="l10n_pe_tax_type_id" widget="selection"/>
+                      </group>
+                  </group>
+              </xpath>
+          </field>
+      </record>
+
+      <!--actions-->
+		<act_window id="action_account_group" name="Tipos de cuentas contables" res_model="account.account.type" view_mode="tree,form"
+                    view_id="view_account_account_type_list"/>
+
+		<!--menus-->
+        <menuitem id="menu_account_group_" name="Tipos de cuentas contables" parent="account.account_account_menu" sequence="10" action="action_account_group"/>
+  </data>
+</odoo>
