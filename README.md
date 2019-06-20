@@ -1,8 +1,9 @@
 # Estructura de archivos y Script listos para despliegue de Odoo 11 con Docker + módulos extras
 
 
-### Prerequisitos
+### Requisitos
 
+* maquina linux (probado sobre ubuntu 18.04)
 * acceso superusuario
 * openssh 
 * git
@@ -112,10 +113,6 @@ Si desea agregar módulos extras deberá añadirlos a la carpeta addons, una vez
 
 El despliegue se realiza con Docker, por lo que necesitará conocer algunos comandos básicos para su mantenimiento.
 Puede ver la documentacion aqui https://docs.docker.com
-
-### Manuales
-
-[en construcción]
 
 
 Autor
