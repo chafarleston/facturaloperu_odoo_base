@@ -46,17 +46,72 @@ ports:
       - "8081:8069"
 ```
 
-ejecutar el script con el siguiente comando
+guarde los cambios del archivo y confirme el nombre.
+
+Para ejecutar el script debe conocer el paquete que ha adquirido
+
+* Odoo Basic
+* Odoo PRO
+
+para el caso de Odoo Basic ejecute
 
 ```
 ./install.sh
 ```
 
+en el proceso de ejecución se solicitarán las credenciales para los repositorios:
 
-* El script actualizará el sistema operativo, instalará las herramientas necesarias y desplegará Odoo 11 con los módulos listos para instalar.
-* Al acceder en su enlace o IP a Odoo deberá eliminar la bd actual y registrar su nueva base de datos.
-* Si desea agregar módulos extras deberá añadirlos a la carpeta -/addons.
-* El despliegue se realiza con Docker, por lo que necesitará conocer algunos comandos básicos para su mantenimiento.
+* https://gitlab.com/rash07/facturaloperu_odoo_facturacion
+* https://gitlab.com/rash07/facturaloperu_odoo_pos
+
+verifique que se le hayan compartido dichos repositorios, deberá ingresar el correo y contraseña de acceso a gitlab, una vez finalizado el script tendrá Odoo funcionando correctamente en la IP o Dominio bajo el puerto configurado previamente.
+
+Para el paquete PRO el caso es muy similar solamente debe enviar un parametro en la ejecución del script:
+
+```
+./install.sh 2
+```
+
+con esto se descargarán los modulos de facturación, pos, guías, kardex y demás, de igual manera serán solicitadas las credenciales de cada uno, asi que debe verificar previamente que tiene acceso a cada uno.
+
+### Tareas del script
+
+* Actualizar el sistema operativo
+* Instalar las herramientas necesarias (Docker, Curl,entre otras)
+* Clonar los repositorios al cual se tenga acceso como miembro
+* Configurar los archivos de los contenedores para que los modulos extras sean reconocidos por Odoo
+* Iniciar los servicios de base de datos y web para Odoo 11
+
+### Tareas comunes posteriores a la ejecución del script
+
+1. Verificar el acceso
+
+Acceder al dominio o IP, Odoo deberá estar listo con una base de datos precargada, de tener algun error (error 500, 404 o similar) debe reiniciar el servicio con el comando
+
+```
+docker restart fp_odoo
+```
+
+Si continua con algun error puede ubicar el log de Odoo con el siguiente comando
+
+```
+docker logs --tail 60 fp_odoo
+```
+
+Puede hacernos llegar el log o enviar el acceso a su instancia para verificar si el problema no es solventado reiniciando el servicio
+
+2. Crear su primera BD 
+
+Eliminar la base de datos actual, esta contiene ya datos precargados sin pero esta en otro idioma y con otras localidades, se recomienda eliminarla y crear una nueva con el idioma y pais adecuado
+
+3. Módulos extras
+
+Si desea agregar módulos extras deberá añadirlos a la carpeta addons, una vez cargados reinicie el servicio y actualice las aplicaciones en Odoo, recuerde estar en modo desarrollador
+
+4. Comandos Docker
+
+El despliegue se realiza con Docker, por lo que necesitará conocer algunos comandos básicos para su mantenimiento.
+Puede ver la documentacion aqui https://docs.docker.com
 
 ### Manuales
 
