@@ -35,3 +35,5 @@ fi
 
 echo "Configuring"
 docker-compose up -d
+docker-compose exec -T web pip3 install phonenumbers
+docker-compose exec -T web pip3 install xlrd
