@@ -114,6 +114,10 @@ Si desea agregar módulos extras deberá añadirlos a la carpeta addons, una vez
 El despliegue se realiza con Docker, por lo que necesitará conocer algunos comandos básicos para su mantenimiento.
 Puede ver la documentacion aqui https://docs.docker.com
 
+### Manual
+
+https://docs.google.com/document/d/1Mjq__epVHM8GQ6YQkof9RZ3NaUWUk2anDQ_0_8ui1Aw/edit?usp=sharing
+
 
 Autor
 -----
