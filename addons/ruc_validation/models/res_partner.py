@@ -1,29 +1,11 @@
 # -*- coding: utf-8 -*-
-###############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2009-TODAY Odoo Peru(<http://www.odooperu.pe>).
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Lesser General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Lesser General Public License for more details.
-#
-#    You should have received a copy of the GNU Lesser General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-###############################################################################
 
-import logging
+import logging, time
 from odoo import models, fields, api
 from odoo.exceptions import Warning
 
 import requests
+
 
 def get_data_doc_number(tipo_doc, numero_doc, format='json'):
     user, password = 'demorest', 'demo1234'
@@ -45,27 +27,16 @@ def get_data_doc_number(tipo_doc, numero_doc, format='json'):
         except Exception as e:
             res['error'] = True
     return res
-
+    
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    registration_name = fields.Char('Name', size=128, index=True, )
-    catalog_06_id = fields.Many2one('einvoice.catalog.06','Tipo Doc.', index=True)
-    state = fields.Selection([('habido','Habido'),('nhabido','No Habido')],'State')
+    # evitar actualización automatica del campo zip
+    ubigeo = fields.Char(string='Ubigeo', size=6, required=True)
 
-    #~ tipo_contribuyente = fields.Char('Tipo de contribuyente')
-    #~ fecha_inscripcion = fields.Date('Fecha de inscripción')
-    #~ estado_contribuyente = fields.Char('Estado del contribuyente')
-    #~ agente_retencion = fields.Boolean('Agente de Retención')
-    #~ agente_retencion_apartir_del = fields.Date('A partir del')
-    #~ agente_retencion_resolucion = fields.Char('Resolución')
-    #~ sistema_emision_comprobante = fields.Char('Sistema emisión')
-    #~ sistema_contabilidad = fields.Char('Sistema contabilidad')
-    #~ ultima_actualizacion_sunat = fields.Date('Última actualización')
-
-    @api.onchange('catalog_06_id','vat')
-    def vat_change(self):
-        self.update_document()
+    @api.onchange('ubigeo')
+    def on_change_state(self):
+        self.zip = self.ubigeo
 
     @api.one
     def update_document(self):
@@ -123,6 +94,8 @@ class ResPartner(models.Model):
                 self.street = d['domicilio_fiscal']
                 self.vat_subjected = True
                 self.is_company = True
+                self.ubigeo = d['ubigeo']
+                self.zip = self.ubigeo
         else:
             True
 

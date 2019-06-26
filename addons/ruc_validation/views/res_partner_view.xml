@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <!-- <sheet position="before">
+                    <header>
+                        <button string="Actulizar datos RUC" type="object" name="update_document"/>
+                        <field name="state" widget="statusbar" nolabel="1" statusbar_visible="habido,nhabido" statusbar_colors="{&quot;habido&quot;:&quot;green&quot;,&quot;nhabido&quot;:&quot;red&quot;}" readonly="0"/>
+                    </header>
+                </sheet> -->
+
+                <div class="o_row" position="replace">
+                    <!-- <div class="o_row">
+                        <field name="registration_name" placeholder="Razón social" attrs="{'invisible': [('is_company','=',False)],'required': [('is_company','=',True)]}"/>
+                    </div> -->
+                </div>
+                <xpath expr="//field[@name='category_id']" position="before">
+                    <field name="ubigeo" placeholder="010101"/>
+                </xpath>
+                <xpath expr="//field[@name='zip']" position="attributes">
+                    <attribute name="class">hidden</attribute>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="before">
+                    <field name="catalog_06_id" placeholder="Tipo de Documento" widget="selection"/>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="string">Número de documento</attribute>
+                    <attribute name="placeholder">01234657890</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
