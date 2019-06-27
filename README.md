@@ -31,7 +31,7 @@ cd facturaloperu_odoo_base
 dar permisos de ejecución al archivo install.sh
 
 ```
-chomd +x install.sh
+chmod +x install.sh
 ```
 
 si ejecutará odoo en un puerto específico deberá editar el archivo docker-compose.yml
