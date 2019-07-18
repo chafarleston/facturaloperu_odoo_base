@@ -3,15 +3,15 @@
 
 
 {
-    'name': 'Pos - consulta API: RUC DNI',
-    'version': '11.0',
+    'name': 'Pos consulta de datos dni, ruc',
+    'version': '11.0.1',
     'author': 'Bitodoo, Facturaloperu',
     'category': 'Point of Sale',
-    'summary': 'Pos - consulta de datos dni, ruc',
-    'website': 'http://www.facturaloperu.com',
+    'summary': 'Pos consulta de datos dni, ruc',
+    'website': 'https://www.bitodoo.com',
     'license': 'AGPL-3',
     'description': """
-        Pos - consulta de datos RUC y DNI para registrar nuevos clientes
+        Pos consulta de datos dni, ruc
     """,
     'depends': ['point_of_sale'],
     'data': [
@@ -22,4 +22,5 @@
     ],
     'installable': True,
     'auto_install': False,
+    "sequence": 2,
 }

@@ -4,7 +4,7 @@
 
         <template id="assets" inherit_id="point_of_sale.assets">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/pos_ruc_dni_validation/static/src/js/pos_partner.js"></script>
+                <script type="text/javascript" src="/l10n_pe_pos_consulta_dni_ruc/static/src/js/pos_partner.js"></script>
             </xpath>
         </template>
 

@@ -18,7 +18,7 @@
             </div>
             <div class='client-details-box clearfix'>
                 <div class='client-details-left'>
-                    <!-- <div class='client-detail'>
+                    <div class='client-detail' style="display:none;">
                         <span class='label'>Tipo doc.</span>
                         <t t-if="!partner.catalog_06_id">
                             <select class='detail tipo_doc' name='tipo_doc'>
@@ -35,7 +35,7 @@
                                 <option value='6' t-att-selected="partner.catalog_06_id[0]===4?true:undefined">RUC</option>
                             </select>
                         </t>
-                    </div> -->
+                    </div>
                     <div class='client-detail'>
                         <span class='label'>Dirección</span>
                         <input class='detail client-address-street' name='street'       t-att-value='partner.street || ""' placeholder='Street'></input>
@@ -95,12 +95,12 @@
             </div>
             <div class='client-details-box clearfix'>
                 <div class='client-details-left'>
-                    <!-- <div class='client-detail'>
+                    <div class='client-detail' style="display:none;">
                         <span class='label'>Tipo Doc.</span>
                         <t t-if='partner.catalog_06_id'>
                             <span class='detail client-address'><t t-esc='partner.catalog_06_id[1]' /></span>
                         </t>
-                    </div> -->
+                    </div>
                     <div class='client-detail'>
                         <span class='label'>Dirección</span>
                         <t t-if='partner.address'>
@@ -156,7 +156,7 @@
     <t t-extend="ClientDetailsEdit">
         <t t-jquery=".client-details-right div:last" t-operation="replace"/>
         <t t-jquery=".save" t-operation="after">
-            <div class='button consulta-datos'><i class='fa fa-file-text-o' /></div>
+            <div class='button consulta-datos'><i class='fa fa-search' /></div>
         </t>
     </t>
     <!--
@@ -215,10 +215,10 @@
     -->
     <t t-extend="ClientListScreenWidget">
         <t t-jquery=".client-list thead tr" t-operation="append">
-            <td>Tipo. doc.</td>
+            <td><strong>Tipo doc.</strong></td>
         </t>
         <t t-jquery=".client-list thead tr" t-operation="append">
-            <td>Nro. doc.</td>
+            <td><strong>Nro. doc.</strong></td>
         </t>
     </t>
      <t t-extend="ClientLine">

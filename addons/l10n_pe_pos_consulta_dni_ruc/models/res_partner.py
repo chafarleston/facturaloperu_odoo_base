@@ -23,6 +23,22 @@ class ResPartner(models.Model):
             vals.update({"zip":"-"})
 
         return super(ResPartner, self).create(vals)
+
+    # @api.model
+    # def consulta_datos(self, tipo_documento, nro_documento, format='json'):
+    #     if tipo_documento=="dni":
+    #         d = self.get_person_name(nro_documento)
+    #         if d:
+    #             return {"data":{"nombres":d}}
+    #         else:
+    #             return {"error":True,"message":"No se ha encontrado el DNI"}
+            
+    #     elif tipo_documento=="ruc":
+    #         d = self.consulta_ruc_api(nro_documento)
+    #         if d:
+    #             return {"data":d}
+    #         else:
+    #             return {"error":True,"message":"No se ha encontrado el RUC"}
     
     @api.model
     def consulta_datos(self, tipo_documento, nro_documento, format='json'):

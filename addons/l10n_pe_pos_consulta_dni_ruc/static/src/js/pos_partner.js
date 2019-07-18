@@ -1,4 +1,4 @@
-odoo.define('pos_ruc_dni_validation.pos_bus_restaurant', ["web.core", 'point_of_sale.screens', "web.session", 'point_of_sale.gui', "web.rpc"], function(require) {
+odoo.define('l10n_pe_pos_consulta_dni_ruc.pos_bus_restaurant', ["web.core", 'point_of_sale.screens', "web.session", 'point_of_sale.gui', "web.rpc"], function(require) {
     "use strict";
     let session = require("web.session");
     let core = require('web.core');
@@ -75,7 +75,15 @@ odoo.define('pos_ruc_dni_validation.pos_bus_restaurant', ["web.core", 'point_of_
                 return;
             }
 
-            console.log(fields);
+            if (!fields.ubigeo) {
+                this.gui.show_popup('error', _t('Debe agregar ubigeo'));
+                return;
+            }
+
+            if (!fields.catalog_06_id) {
+                this.gui.show_popup('error', _t('Debe agregar tipo de documento'));
+                return;
+            }
 
             if (this.uploaded_picture) {
                 fields.image = this.uploaded_picture;
@@ -87,9 +95,15 @@ odoo.define('pos_ruc_dni_validation.pos_bus_restaurant', ["web.core", 'point_of_
                 2: DNI
                 4: RUC
             */
-            //fields.catalog_06_id = fields.tipo_doc == '2' ? 2 : (fields.tipo_doc == '4' ? 4 : 1);
 
-            if (fields.catalog_06_id[0] == '2') {
+            fields.tipo_doc = fields.catalog_06_id;
+            console.log(fields.catalog_06_id);
+            console.log(fields.tipo_doc);
+            console.log(fields);
+
+            // fields.catalog_06_id = fields.tipo_doc == '2' ? 2 : (fields.tipo_doc == '4' ? 4 : 7);
+
+            if (fields.tipo_doc == '2') {
                 fields.company_type = "person"
                 // fields.catalog_06_id = 2
                 if (fields.vat) {
@@ -105,7 +119,7 @@ odoo.define('pos_ruc_dni_validation.pos_bus_restaurant', ["web.core", 'point_of_
                         'body': "Si coloca que el tipo de documento es DNI, ústed debe completar el campo Documento con el DNI del Cliente.",
                     });
                 }
-            } else if (fields.catalog_06_id[0] == '4') {
+            } else if (fields.tipo_doc == '4') {
                 fields.company_type = "company"
                 // fields.catalog_06_id = 4
                 if (fields.vat) {
@@ -120,6 +134,11 @@ odoo.define('pos_ruc_dni_validation.pos_bus_restaurant', ["web.core", 'point_of_
                         'title': 'Error',
                         'body': "Si coloca que el tipo de documento es RUC, ústed debe completar el campo Documento con el DNI del Cliente.",
                     });
+                }
+            } else {
+                fields.catalog_06_id = 7
+                if (fields.vat == "") {
+                    fields.vat = "-"
                 }
             }
             rpc.query({
@@ -140,8 +159,9 @@ odoo.define('pos_ruc_dni_validation.pos_bus_restaurant', ["web.core", 'point_of_
         get_datos: function(partner, contents) {
             let self = this;
             let tipo_doc = $('.detail.client-document-types').val();
+            console.log(tipo_doc);
             // Si es otro tipo de doc. que no sea dni o ruc ya no consulta.
-            if (tipo_doc != '') {
+            if (tipo_doc != '-') {
                 let fields = {};
                 let contents = this.$('.client-details-contents');
 
@@ -151,10 +171,11 @@ odoo.define('pos_ruc_dni_validation.pos_bus_restaurant', ["web.core", 'point_of_
                 if (!fields.vat) {
                     this.gui.show_popup('error', {
                         'title': 'Alerta!',
-                        'body': 'Ingrese número de documento',
+                        'body': 'Ingrese nro. documento',
                     });
                     return;
                 };
+                fields.tipo_doc = tipo_doc;
                 let context = {}
                 rpc.query({
                     model: "res.partner",
