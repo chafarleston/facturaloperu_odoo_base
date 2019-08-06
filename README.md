@@ -114,9 +114,25 @@ Si desea agregar módulos extras deberá añadirlos a la carpeta addons, una vez
 El despliegue se realiza con Docker, por lo que necesitará conocer algunos comandos básicos para su mantenimiento.
 Puede ver la documentacion aqui https://docs.docker.com
 
-### Manual
+## Manuales
 
 https://docs.google.com/document/d/1Mjq__epVHM8GQ6YQkof9RZ3NaUWUk2anDQ_0_8ui1Aw/edit?usp=sharing
+
+### Ventas - Facturación
+
+Configuración: https://docs.google.com/document/d/1lLzbdWEJksc0QFHFIAWEr64b-me0g-Xb1DU4_kXTutQ/edit?usp=sharing
+
+Uso: https://docs.google.com/document/d/12GhrsAi1mssaF9KICB4Ns9BuRo-mn_ww52S7K5P1LZA/edit?usp=sharing
+
+### Ventas - POS
+
+Configuración: https://docs.google.com/document/d/188SdLQVzgUz0ybVFWHJje_BPfmsfepJOMYZpWEgg3tY/edit?usp=sharing
+
+Uso: https://docs.google.com/document/d/18BzE_g-Gc2f-boGweDl4Qpm-Q0UTd1LGNonXxQHKPfk/edit?usp=sharing
+
+### Guías de remisión
+
+Configuración: https://docs.google.com/document/d/1TcaNwIGAEPpO4K1HsNKfHfZOEtGMq2vWMojJ7kak4Lk/edit?usp=sharing
 
 
 Autor
