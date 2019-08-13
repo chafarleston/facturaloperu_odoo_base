@@ -75,7 +75,7 @@ odoo.define('l10n_pe_pos_consulta_dni_ruc.pos_bus_restaurant', ["web.core", 'poi
                 return;
             }
 
-            if (!fields.ubigeo) {
+            if (!fields.zip) {
                 this.gui.show_popup('error', _t('Debe agregar ubigeo'));
                 return;
             }
@@ -190,7 +190,7 @@ odoo.define('l10n_pe_pos_consulta_dni_ruc.pos_bus_restaurant', ["web.core", 'poi
                         });
                     } else if (datos.data) {
                         if (tipo_doc === '2') {
-                            contents.find('input[name="name"]').val(datos.data.nombres)
+                            contents.find('input[name="name"]').val(datos.data.nombres + " " + datos.data.ape_paterno + " " + datos.data.ape_materno)
                         } else if (tipo_doc === '4') {
                             contents.find('input[name="name"]').val(datos.data.nombre)
                             contents.find('input[name="zip"]').val(datos.data.ubigeo)

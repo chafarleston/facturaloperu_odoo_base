@@ -49,5 +49,5 @@ class res_partner(models.Model):
     def onchange_district(self):
         if self.district_id:
             state = self.district_id.code
-            self.zip = state
+            # self.zip = state #desactualizados
     

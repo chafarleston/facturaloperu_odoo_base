@@ -20,7 +20,7 @@ class ResPartner(models.Model):
         if not vals.get("registration_name",False):
             vals.update({"registration_name":vals.get("name")})
         if not vals.get("zip",False):
-            vals.update({"zip":"-"})
+            vals.update({"zip":vals.get("zip")})
 
         return super(ResPartner, self).create(vals)
 
