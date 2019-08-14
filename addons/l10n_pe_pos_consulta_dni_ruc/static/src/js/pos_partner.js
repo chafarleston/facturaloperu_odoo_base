@@ -135,11 +135,6 @@ odoo.define('l10n_pe_pos_consulta_dni_ruc.pos_bus_restaurant', ["web.core", 'poi
                         'body': "Si coloca que el tipo de documento es RUC, ústed debe completar el campo Documento con el DNI del Cliente.",
                     });
                 }
-            } else {
-                fields.catalog_06_id = 7
-                if (fields.vat == "") {
-                    fields.vat = "-"
-                }
             }
             rpc.query({
                     model: "res.partner",
