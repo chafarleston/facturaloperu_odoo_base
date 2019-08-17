@@ -10,6 +10,7 @@
     'website': 'http://www.facturaloperu.com',
     'depends' : [],
     'data': [
+        'views/res_company.xml',
         'views/res_partner_view.xml',
     ],
     'installable': True,

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import logging, time
 from odoo import models, fields, api
 from odoo.exceptions import Warning
 
@@ -27,7 +26,8 @@ def get_data_doc_number(tipo_doc, numero_doc, format='json'):
         except Exception as e:
             res['error'] = True
     return res
-    
+
+
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
@@ -43,10 +43,12 @@ class ResPartner(models.Model):
 
     catalog_06_id = fields.Many2one('einvoice.catalog.06','Tipo de Documento', index=True, default=_default_catalog, copy=False)
 
-
     @api.onchange('catalog_06_id','vat')
     def vat_change(self):
         self.update_document()
+        if not self.name or self.registration_name:
+            res = self.get_apiperu_data(self.catalog_06_id.code, self.vat)
+            self.update(res)
 
     @api.one
     def update_document(self):
@@ -108,5 +110,49 @@ class ResPartner(models.Model):
                 self.zip = d['ubigeo']
         else:
             True
+
+    @api.model
+    def get_apiperu_data(self, document_type, document_number):
+        url = self.env.user.company_id.apiperu_url
+        token = self.env.user.company_id.apiperu_token
+        document_type = 'dni' if document_type == '1' else 'ruc' if document_type == '6' else ''
+        if not document_type:
+            return {}
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer {0}'.format(token),
+        }
+        register_url = u'{}/{}/{}'.format(url, document_type, document_number)
+        response = requests.get(register_url, headers=headers)
+        if response.status_code != 200:
+            return {}
+        response = response.json()
+        if not response.get('success'):
+            return {}
+        data = response.get('data', {})
+
+        if document_type == 'dni':
+            return {
+                'name': data.get('nombre_completo'),
+                'registration_name': data.get('nombre_completo')
+            }
+        else:
+            ubigeo = data.get('ubigeo', [])
+            ubigeo = len(ubigeo) > 2 and ubigeo[2]
+            district = self.env['res.country.state'].search([('code', '=', ubigeo)], limit=1)
+            return {
+                'name': data.get('nombre_o_razon_social'),
+                'registration_name': data.get('nombre_o_razon_social'),
+                'street': data.get('direccion_completa'),
+                'district_id': district and district.id or False,
+                'province_id': district and district.province_id and district.province_id.id or False,
+                'state_id': district and district.state_id and district.state_id.id or False,
+                'country_id': district and district.state_id and district.state_id.country_id and district.state_id.country_id.id or False,
+                'zip': ubigeo,
+                'is_company': True,
+                'company_type': 'company',
+                'image': self._get_default_image('company', 1, False)
+            }
+
 
 
